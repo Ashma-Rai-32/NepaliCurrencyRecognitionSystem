@@ -40,25 +40,3 @@ a {
     color-scheme: dark;
   }
 }
-
-/* Masonry grid using columns */
-.masonry-grid {
-  column-count: 3; /* Number of columns */
-  column-gap: 20px;
-  width: 90%;
-  max-width: 1200px;
-  margin: 0 auto;
-}
-
-/* Tile styles */
-.tile {
-  background-color: #3498db;
-  color: white;
-  margin-bottom: 20px;
-  padding: 20px;
-  border-radius: 8px;
-  display: inline-block;
-  width: 100%; /* Ensures tiles take up full column width */
-  font-size: 1.5rem;
-  box-sizing: border-box;
-}

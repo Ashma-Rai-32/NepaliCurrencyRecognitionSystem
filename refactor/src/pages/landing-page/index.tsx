@@ -1,7 +1,9 @@
 import LogoFirstLetter from "@/src/assets/logo-first-letter";
+import Button from "@/src/components/Button";
 import Card from "@/src/components/Card";
 import CardOverlapped from "@/src/components/CardOverlapped";
 import Logo from "@/src/components/Logo";
+import IconButtonGroup from "@/src/components/Sidebar";
 
 const LandingPage: React.FC = () => {
   return (
@@ -10,7 +12,7 @@ const LandingPage: React.FC = () => {
         position: "fixed",
         width: "100vw",
         left: "0",
-        height: "100%",
+        // height: "100%",
       }}
     >
       <div
@@ -21,14 +23,24 @@ const LandingPage: React.FC = () => {
         }}
       >
         sidebar
+        <IconButtonGroup
+          options={[
+            { label: "icon", icon: "icon" },
+            {
+              label: "label2",
+              icon: "icon2",
+            },
+          ]}
+        />
       </div>
       <div
         style={{
           display: "flex",
 
           flexDirection: "column",
-          height: "inherit",
+          // /          height: "inherit",
           alignItems: "center",
+          minHeight: "100vh",
           gap: "2rem",
         }}
       >
@@ -45,28 +57,30 @@ const LandingPage: React.FC = () => {
         </div>
         <div
           style={{
-            height: "100%",
             display: "flex",
             width: "100%",
             flexDirection: "column",
+            justifyContent: "center",
+            maxWidth: "960px",
+            gap: "2rem",
           }}
         >
           <div
             style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(12,1fr)",
+              display: "flex",
+              gap: "2rem",
             }}
           >
             <div
               style={{
-                gridColumn: "3/8",
+                flexGrow: "1",
               }}
             >
               <CardOverlapped>content1</CardOverlapped>
             </div>
             <div
               style={{
-                gridColumn: "8/11",
+                width: "330px",
               }}
             >
               <Card>
@@ -74,29 +88,39 @@ const LandingPage: React.FC = () => {
               </Card>
             </div>
           </div>
-          <div className="masonry-grid">
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "flex-end",
+            }}
+          >
             <div
-              className="tile"
               style={{
-                height: "200px",
+                width: "440px",
               }}
             >
-              Tile 1
+              <Card>
+                <Logo />
+              </Card>
             </div>
-            <div className="tile" style={{ height: "500px" }}>
-              Tile 2
-            </div>
-            <div
-              className="tile"
-              style={{
-                height: "400px",
-              }}
+          </div>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+            }}
+          >
+            <Button
+            // style={{
+            //   display: "flex",
+            //   gap: "1rem",
+            //   alignItems: "center",
+            //   justifyContent: "center",
+            //   width: "fit-content",
+            // }}
             >
-              Tile 3
-            </div>
-            <div className="tile">Tile 4</div>
-            <div className="tile">Tile 5</div>
-            <div className="tile">Tile 6</div>
+              Button<div>icon</div>
+            </Button>
           </div>
         </div>
         <div>footer</div>
