@@ -1,16 +1,10 @@
 import CardOverlappedBackground from "../assets/card-overlapped-background";
 
-const CardOverlapped: React.FC = ({ children }) => {
+const CardOverlapped: React.FC<{ children: React.ReactNode }> = ({
+  children,
+}) => {
   return (
-    <div
-      style={{
-        display: "flex",
-        gap: "1rem",
-        width: "10rem",
-        height: "fit-content",
-        padding: "1rem",
-      }}
-    >
+    <div>
       {" "}
       <div
         style={{
@@ -20,7 +14,16 @@ const CardOverlapped: React.FC = ({ children }) => {
       >
         <CardOverlappedBackground />
       </div>
-      {children}
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          gap: "1rem",
+          padding: "2rem",
+        }}
+      >
+        {children}
+      </div>
     </div>
   );
 };

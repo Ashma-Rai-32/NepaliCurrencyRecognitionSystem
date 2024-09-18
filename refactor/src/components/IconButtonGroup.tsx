@@ -2,6 +2,7 @@
 // import classNames from "classnames";
 
 import Button from "./Button";
+import IconButton from "./IconButton";
 
 type IconButtonGroupProps = {
   onClick: () => void;
@@ -15,22 +16,9 @@ const IconButtonGroup: React.FC<IconButtonGroupProps> = ({
   options,
 }) => {
   return (
-    <div
-      className="button-group-container"
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
-        gap: "1rem",
-      }}
-    >
+    <div className="icon-button-group">
       {options.map((option, index) => {
-        return (
-          <Button key={index}>
-            {option.label}
-            {option.icon}
-          </Button>
-        );
+        return <IconButton key={index} icon={option.icon} />;
       })}
     </div>
   );
