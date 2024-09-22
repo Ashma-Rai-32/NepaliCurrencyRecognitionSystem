@@ -1,0 +1,23 @@
+.first-row {
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+
+    @media(max-width:756px) {
+        .button-label {
+            display: none;
+        }
+
+    }
+}
+
+.second-row {
+    display: flex;
+    gap: 2rem;
+
+    @media (max-width:756px) {
+        flex-direction: column;
+    }
+
+
+}

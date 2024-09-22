@@ -18,7 +18,7 @@ const LandingPage: React.FC = ({ theme }) => {
   console.log("👾 | theme:", theme);
 
   return (
-    <>
+    <div>
       <div
         style={{
           display: "flex",
@@ -120,7 +120,7 @@ const LandingPage: React.FC = ({ theme }) => {
           <BsPlusLg className="icon-button-svg" />
         </Button>
       </div>
-    </>
+    </div>
   );
 };
 

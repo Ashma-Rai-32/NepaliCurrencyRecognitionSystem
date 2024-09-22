@@ -18,7 +18,9 @@ const IconButtonGroup: React.FC<IconButtonGroupProps> = ({
   return (
     <div className="icon-button-group">
       {options.map((option, index) => {
-        return <IconButton key={index} icon={option.icon} />;
+        return (
+          <IconButton key={index} icon={option.icon} onClick={option.onClick} />
+        );
       })}
     </div>
   );

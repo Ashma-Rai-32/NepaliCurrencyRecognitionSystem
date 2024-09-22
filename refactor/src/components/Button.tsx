@@ -1,6 +1,7 @@
 // import { css } from "@emotion/css";
 // import classNames from "classnames";
 
+import classNames from "classnames";
 import Link from "next/link";
 
 type ButtonProps = {
@@ -12,12 +13,22 @@ type ButtonProps = {
 const Button: React.FC<ButtonProps> = ({
   className,
   onClick,
-  href,
+  disabled,
+  href = "",
   children,
+  variant,
 }) => {
   return (
-    <Link href={href}>
-      <button onClick={onClick} className="button">
+    <Link href={href} className={className}>
+      <button
+        onClick={onClick}
+        disabled={disabled}
+        className={classNames(
+          "button",
+          { outline: variant === "outline" },
+          { disabled: disabled }
+        )}
+      >
         {children}
       </button>
     </Link>
