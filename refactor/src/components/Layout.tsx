@@ -30,7 +30,7 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
               display: "flex",
               width: "100%",
               flexDirection: "column",
-              justifyContent: "center",
+              // justifyContent: "center",
               maxWidth: "960px",
               gap: "2rem",
               flexGrow: 1,

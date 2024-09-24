@@ -1,52 +1,55 @@
-import LogoFirstLetter from "@/src/assets/logo-first-letter";
 import Button from "@/src/components/Button";
 import Card from "@/src/components/Card";
-import CardOverlapped from "@/src/components/CardOverlapped";
 import Heading1 from "@/src/components/Heading1";
-import Logo from "@/src/components/Logo";
-import IconButtonGroup from "@/src/components/IconButtonGroup";
 import Subtitle from "@/src/components/Subtitle";
 import Title from "@/src/components/Title";
-import TypographicList from "@/src/components/TypographicList";
 import { css } from "@emotion/css";
 import { RootState } from "@reduxjs/toolkit/query";
 import { connect } from "react-redux";
-import { BsPlusLg } from "react-icons/bs";
-import Footer from "@/src/components/Footer";
 import { RiCamera3Fill, RiSearchFill } from "react-icons/ri";
 import classNames from "classnames";
 import ImageThumbnail from "@/src/assets/image-thumbnail";
 import { IoVolumeLow } from "react-icons/io5";
 import StatisticsTile from "@/src/components/StatisticsTile";
 import DropdownSimpleField from "@/src/components/DropdownSimpleField";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import CardInput from "@/src/components/CardInput";
 import axios from "axios";
-import Image from "next/image";
 import { motion } from "framer-motion";
 import Heading3 from "@/src/components/Heading3";
 
 const Scan: React.FC = ({ theme }) => {
   const fileInputRef = useRef(null);
+  const [formValues, setFormValues] = useState({
+    file: null,
+  });
   const [file, setFile] = useState();
 
   console.log("👾 | file:", file);
 
-  const imageUrl = file && URL.createObjectURL(file);
+  const [modelResult, setModelResult] = useState(null);
+  const [showSubmitAnother, setShowSubmitAnother] = useState(false);
 
-  const [result, setResult] = useState();
-  const [showThumbnailOnly, setShowThumbnailOnly] = useState(false);
+  const [scanPageIndex, setScanPageIndex] = useState(0); //0: initial, 1: show submit another pic
+
+  useEffect(() => {
+    if (modelResult) setScanPageIndex(1);
+  }, [modelResult]);
 
   const classify = async () => {
     //classify the picture
     //trigger model here
-
     try {
       const formData = new FormData();
       formData.append("imagefile", file);
-      const result = await axios.post("http://localhost:5000/", formData);
-      setResult(result.data);
-      setShowThumbnailOnly(true);
+      const modelResult = await axios.post("http://localhost:5000/", formData);
+      setModelResult({
+        fileMetadata: file,
+        fileImageUrl: URL.createObjectURL(file),
+        result: modelResult.data,
+      });
+      setFile(null);
+      // setShowSubmitAnother(true);
     } catch (error) {
       console.log(error);
     }
@@ -58,92 +61,82 @@ const Scan: React.FC = ({ theme }) => {
   };
 
   return (
-    <>
+    <div
+      className={classNames("wrapper", {
+        "second-phase": scanPageIndex === 1,
+      })}
+    >
       <div className="first-row">
         <CardInput
-          className={classNames(
-            "text-muted",
-            css({
-              flexGrow: 1,
-              padding: !showThumbnailOnly && "0",
-              overflow: "hidden",
-              ...(!showThumbnailOnly && { minHeight: "50vh" }),
-            }),
-            showThumbnailOnly &&
-              css({
-                flexDirection: "row",
-                justifyContent: "space-between",
-              })
-          )}
+          className={classNames("text-muted", "card-input", {
+            "second-phase": scanPageIndex === 1,
+          })}
           file={file}
           setFile={setFile}
           type="input"
         >
-          {file ? (
-            <>
-              {showThumbnailOnly && (
-                <div
-                  style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    gap: "1rem",
-                  }}
-                >
-                  <Heading3>{file.name}</Heading3>
-                  {file.size / 1024} MB
-                </div>
-              )}
+          {scanPageIndex === 0 ? (
+            file ? (
               <img
-                src={imageUrl}
+                src={URL.createObjectURL(file)}
                 style={{
                   width: "auto",
                   height: "100%",
                   objectFit: "cover",
-                  maxHeight: showThumbnailOnly ? "64px" : "450px",
+                  maxHeight: scanPageIndex === 1 ? "64px" : "400px",
                 }}
               />
-            </>
-          ) : (
+            ) : (
+              <div className="body-container">
+                <Heading1>
+                  {file ? (
+                    file.name
+                  ) : (
+                    <>
+                      <RiCamera3Fill className="icon-button-svg" />
+                      Click a picture
+                    </>
+                  )}
+                </Heading1>
+                {file
+                  ? Math.floor(file.size / 1024) + "MB"
+                  : "Please submit a picture of Nepali bill you want to classify."}
+              </div>
+            )
+          ) : file ? (
             <div
-              style={{
+              className={css({
+                marginLeft: "2rem",
+                gap: "1rem",
                 display: "flex",
-                flexDirection: "column",
-                gap: "2rem",
-                flexGrow: 1,
-                justifyContent: "center",
-                alignItems: "center",
-              }}
+              })}
             >
-              <Heading1
-                className={css({
-                  display: "flex",
-                  gap: "1rem",
-                  alignItems: "center",
-                })}
-              >
-                {file ? (
-                  file.name
-                ) : (
-                  <>
-                    <RiCamera3Fill className="icon-button-svg" />
-                    Click a picture
-                  </>
-                )}
-              </Heading1>
-              {file
-                ? Math.floor(file.size / 1024) + "MB"
-                : "Please submit a picture of Nepali bill you want to classify."}
+              <Heading3>{file.name}</Heading3>(
+              {Math.floor(file.size / 1024) + "MB"})
             </div>
+          ) : (
+            <>
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: "1rem",
+                  paddingLeft: "2rem",
+                }}
+              >
+                Please submit the picture of the Nepali bill you want to
+                classify.
+              </div>
+            </>
           )}
           <div
             style={{
-              ...(!showThumbnailOnly && { padding: "0 2rem 2rem 2rem" }),
+              ...(scanPageIndex === 0 && { padding: "0 2rem 2rem 2rem" }),
             }}
           >
             <Button
               onClick={(e) => {
                 e.preventDefault();
-                console.log("👾 | e:", e);
 
                 e.stopPropagation();
                 classify();
@@ -164,7 +157,7 @@ const Scan: React.FC = ({ theme }) => {
         </CardInput>
       </div>
 
-      {result && (
+      {modelResult && (
         <motion.div
           className="second-row"
           initial="hidden"
@@ -188,9 +181,9 @@ const Scan: React.FC = ({ theme }) => {
               })
             )}
           >
-            {result ? (
+            {modelResult ? (
               <img
-                src={imageUrl}
+                src={modelResult.fileImageUrl}
                 style={{
                   width: "auto",
                   height: "100%",
@@ -241,7 +234,7 @@ const Scan: React.FC = ({ theme }) => {
                     gap: "2rem",
                   }}
                 >
-                  <Title>NPR {result.prediction}/-</Title>
+                  <Title>NPR {modelResult.result.prediction}/-</Title>
                   <Subtitle className="text-muted">
                     One thousand rupees
                   </Subtitle>
@@ -254,7 +247,7 @@ const Scan: React.FC = ({ theme }) => {
                     {
                       label: "confidence",
                       type: "percentage-bar",
-                      value: result.confidence,
+                      value: modelResult.result.confidence,
                     },
                     { label: "Accuracy", type: "percentage-bar", value: 20 },
                     { label: "Time elapsed", type: "text", value: "100ms" },
@@ -279,7 +272,7 @@ const Scan: React.FC = ({ theme }) => {
           </div>
         </motion.div>
       )}
-    </>
+    </div>
   );
 };
 
