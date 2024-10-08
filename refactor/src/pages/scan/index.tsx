@@ -17,12 +17,19 @@ import CardInput from "@/src/components/CardInput";
 import axios from "axios";
 import { motion } from "framer-motion";
 import Heading3 from "@/src/components/Heading3";
+import { updateModelHistory } from "@/src/store/model-slice";
+import {
+  MdOutlineArrowBackIos,
+  MdOutlineArrowForwardIos,
+  MdOutlineKeyboardArrowLeft,
+  MdOutlineKeyboardArrowRight,
+} from "react-icons/md";
 
-const Scan: React.FC = ({ theme }) => {
+const Scan: React.FC = ({ theme, modelHistory, updateModelHistory }) => {
+  console.log("👾 | modelHistory:", modelHistory);
+
   const fileInputRef = useRef(null);
-  const [formValues, setFormValues] = useState({
-    file: null,
-  });
+
   const [file, setFile] = useState();
 
   console.log("👾 | file:", file);
@@ -31,7 +38,14 @@ const Scan: React.FC = ({ theme }) => {
   const [showSubmitAnother, setShowSubmitAnother] = useState(false);
 
   const [scanPageIndex, setScanPageIndex] = useState(0); //0: initial, 1: show submit another pic
+  const [modelHistoryIndex, setModelHistoryIndex] = useState(null); //0: initial, 1: show submit another pic
 
+  console.log("👾 | modelHistoryIndex:", modelHistoryIndex);
+
+  console.log(
+    "👾 | Object.keys(modelHistory)?.length - 1:",
+    Object.keys(modelHistory)?.length - 1
+  );
   useEffect(() => {
     if (modelResult) setScanPageIndex(1);
   }, [modelResult]);
@@ -40,15 +54,33 @@ const Scan: React.FC = ({ theme }) => {
     //classify the picture
     //trigger model here
     try {
+      console.log("👾 | file:", file);
+
       const formData = new FormData();
       formData.append("imagefile", file);
-      const modelResult = await axios.post("http://localhost:5000/", formData);
-      setModelResult({
-        fileMetadata: file,
-        fileImageUrl: URL.createObjectURL(file),
-        result: modelResult.data,
-      });
-      setFile(null);
+      const response = await axios.post("http://localhost:5000/", formData);
+
+      console.log("👾 | response:", response);
+
+      if (response?.status === 200) {
+        const modelResult = {
+          fileMetadata: {
+            name: file.name,
+            size: file.size,
+            lastModified: file.lastModified,
+          },
+          fileImageUrl: URL.createObjectURL(file),
+          result: response.data,
+        };
+
+        setModelResult(modelResult);
+        updateModelHistory(modelResult);
+        setModelHistoryIndex(Object.keys(modelHistory)?.length);
+        setFile(null);
+      } else {
+        throw new Error("SERVER ERROR");
+      }
+      // debugger;
       // setShowSubmitAnother(true);
     } catch (error) {
       console.log(error);
@@ -157,127 +189,183 @@ const Scan: React.FC = ({ theme }) => {
         </CardInput>
       </div>
 
-      {modelResult && (
-        <motion.div
-          className="second-row"
-          initial="hidden"
-          animate="visible"
-          exit="hidden"
-          variants={variants}
-          transition={{ duration: 0.5 }} // Adjust duration as needed
-        >
-          <Card
-            className={classNames(
-              "first",
-              css({
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                minHeight: "416px",
-                width: "auto",
-                flexGrow: 1,
-                padding: "0",
-                overflow: "hidden",
-              })
-            )}
-          >
-            {modelResult ? (
-              <img
-                src={modelResult.fileImageUrl}
-                style={{
-                  width: "auto",
-                  height: "100%",
-                  objectFit: "cover",
-                  maxHeight: "450px",
-                }}
-              />
-            ) : (
-              <ImageThumbnail width="4rem" height="4rem" />
-            )}
-          </Card>
+      {modelHistory &&
+        Object.entries(modelHistory).map(([key, entry], index) => {
+          console.log("👾 | index:", index);
+          console.log("👾 | modelHistoryIndex:", modelHistoryIndex);
+          // debugger;
 
-          <div className="second">
-            <div
-              style={{
-                position: "relative",
-                height: "1rem",
-                top: "-2rem",
-                display: "flex",
-                justifyContent: "flex-end",
-              }}
-              className="text-muted"
-            >
-              1/2
-            </div>
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                gap: "2rem",
-                position: "relative",
-                top: "-1rem",
-              }}
-            >
-              <Card
-                className={css({
-                  display: "flex",
-                  flexDirection: "row",
-
-                  alignItems: "center",
-                  justifyContent: "space-between",
-                })}
+          if (index === modelHistoryIndex)
+            return (
+              <motion.div
+                key={key}
+                className="second-row"
+                initial="hidden"
+                animate="visible"
+                exit="hidden"
+                variants={variants}
+                transition={{ duration: 0.5 }} // Adjust duration as needed
               >
-                <div
-                  style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    gap: "2rem",
-                  }}
+                <Card
+                  className={classNames(
+                    "first",
+                    css({
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      minHeight: "416px",
+                      width: "auto",
+                      flexGrow: 1,
+                      padding: "0",
+                      overflow: "hidden",
+                    })
+                  )}
                 >
-                  <Title>NPR {modelResult.result.prediction}/-</Title>
-                  <Subtitle className="text-muted">
-                    One thousand rupees
-                  </Subtitle>
+                  {entry ? (
+                    <img
+                      src={entry.fileImageUrl}
+                      style={{
+                        width: "auto",
+                        height: "100%",
+                        objectFit: "cover",
+                        maxHeight: "450px",
+                      }}
+                    />
+                  ) : (
+                    <ImageThumbnail width="4rem" height="4rem" />
+                  )}
+                </Card>
+
+                <div className="second">
+                  {Object.keys(modelHistory).length > 1 && (
+                    <div
+                      className={classNames(
+                        css({
+                          position: "relative",
+                          height: "1rem",
+
+                          top: "-2rem",
+                          display: "flex",
+                          justifyContent: "flex-end",
+                          gap: "1rem",
+                          alignItems: "center",
+                          "@media (max-width:746px)": {
+                            display: "none",
+                          },
+                        }),
+                        "text-muted"
+                      )}
+                    >
+                      <MdOutlineKeyboardArrowLeft
+                        className={
+                          modelHistoryIndex <= 0 ? "disabled" : "active"
+                        }
+                        onClick={
+                          modelHistoryIndex <= 0
+                            ? undefined
+                            : () => setModelHistoryIndex((prev) => prev - 1)
+                        }
+                      />
+                      {modelHistoryIndex + 1}/{Object.keys(modelHistory).length}
+                      <MdOutlineKeyboardArrowRight
+                        className={
+                          modelHistoryIndex + 1 >=
+                          Object.keys(modelHistory).length
+                            ? "disabled"
+                            : "active"
+                        }
+                        onClick={
+                          modelHistoryIndex + 1 >=
+                          Object.keys(modelHistory).length
+                            ? undefined
+                            : () => setModelHistoryIndex((next) => next + 1)
+                        }
+                      />
+                    </div>
+                  )}
+                  <div
+                    style={{
+                      display: "flex",
+                      flexDirection: "column",
+                      gap: "2rem",
+                      position: "relative",
+                      top: "-1rem",
+                    }}
+                  >
+                    <Card
+                      className={css({
+                        display: "flex",
+                        flexDirection: "row",
+
+                        alignItems: "center",
+                        justifyContent: "space-between",
+                      })}
+                    >
+                      <div
+                        style={{
+                          display: "flex",
+                          flexDirection: "column",
+                          gap: "2rem",
+                        }}
+                      >
+                        <Title>NPR {entry.result.prediction}/-</Title>
+                        <Subtitle className="text-muted">
+                          One thousand rupees
+                        </Subtitle>
+                      </div>
+                      <IoVolumeLow className="icon-button-svg" size="4rem" />
+                    </Card>
+                    <div>
+                      <StatisticsTile
+                        options={[
+                          {
+                            label: "confidence",
+                            type: "percentage-bar",
+                            value: entry.result.confidence,
+                          },
+                          {
+                            label: "Accuracy",
+                            type: "percentage-bar",
+                            value: 20,
+                          },
+                          {
+                            label: "Time elapsed",
+                            type: "text",
+                            value: "100ms",
+                          },
+                        ]}
+                      />
+                    </div>
+                    <div
+                      style={{
+                        display: "flex",
+                        justifyContent: "flex-end",
+                      }}
+                    >
+                      <DropdownSimpleField
+                        options={[
+                          { label: "USD", value: "USD" },
+                          { label: "NPR", value: "NPR" },
+                        ]}
+                        label="Convert"
+                      />
+                    </div>
+                  </div>
                 </div>
-                <IoVolumeLow className="icon-button-svg" size="4rem" />
-              </Card>
-              <div>
-                <StatisticsTile
-                  options={[
-                    {
-                      label: "confidence",
-                      type: "percentage-bar",
-                      value: modelResult.result.confidence,
-                    },
-                    { label: "Accuracy", type: "percentage-bar", value: 20 },
-                    { label: "Time elapsed", type: "text", value: "100ms" },
-                  ]}
-                />
-              </div>
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "flex-end",
-                }}
-              >
-                <DropdownSimpleField
-                  options={[
-                    { label: "USD", value: "USD" },
-                    { label: "NPR", value: "NPR" },
-                  ]}
-                  label="Convert"
-                />
-              </div>
-            </div>
-          </div>
-        </motion.div>
-      )}
+              </motion.div>
+            );
+        })}
     </div>
   );
 };
 
 const mapStateToProps = (state: RootState) => ({
   theme: state.theme.theme,
+  modelHistory: state.model.modelHistory,
 });
 
-export default connect(mapStateToProps)(Scan);
+const mapDispatchToProps = {
+  updateModelHistory,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Scan);

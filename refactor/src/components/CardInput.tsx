@@ -21,7 +21,13 @@ const CardInput: React.FC<{ children: React.ReactNode }> = ({
   // Handle file input change (when the user selects a file)
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     event.stopPropagation();
+
     const file = event.target.files?.[0];
+
+    // console.log("👾 | event.target.files:", event.target.files);
+
+    // console.log("👾 | file:", file);
+
     if (file) {
       setFile(file);
       // Process the selected file (e.g., upload or display a preview)

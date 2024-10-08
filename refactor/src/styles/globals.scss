@@ -93,6 +93,14 @@ a {
   text-transform: uppercase;
 }
 
+.disabled {
+  color: $background;
+  cursor: auto;
+}
+
+.active {
+  cursor: pointer;
+}
 
 .text-muted {
   color: $text-muted;
@@ -112,14 +120,10 @@ a {
     min-height: 100vh;
     gap: 1rem;
     margin: 0 2rem;
-    // .body-container {
-    //   display: flex;
-    //   width: 100%;
-    //   flex-direction: column;
-    //   justify-content: center;
-    //   max-width: 960px;
-    //   gap: 2rem;
-    //   margin-bottom: -2.5rem;
+
+    @media (max-width:375px) {
+      margin: 0 1.5rem
+    }
   }
 }
 
