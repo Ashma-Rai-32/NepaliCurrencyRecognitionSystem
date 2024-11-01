@@ -1,0 +1,34 @@
+.model-carousel {
+
+    display: grid;
+    width: 100%;
+    // height: $column-5;
+
+    position: absolute;
+    top: 0rem;
+
+    grid-template-columns: 4rem auto $column-2;
+
+    .carousel-background-polygon {
+
+        // position: absolute;
+        // left: 66.1%;
+        // right: 0;
+        // top: 2.93%;
+        // bottom: 0.14%;
+        // background: #F5F5F5;
+        // /* Light background color */
+        // border-radius: 32px;
+        // /* Rounded corners */
+        padding: 2rem;
+        box-sizing: border-box;
+        position: relative;
+        top: 5rem;
+        width: $column-2;
+        height: $column-3;
+        // background: $text-muted;
+        border-radius: 32px;
+        transform: skewY(-30deg);
+        /* Adjust degree for desired shear angle */
+    }
+}

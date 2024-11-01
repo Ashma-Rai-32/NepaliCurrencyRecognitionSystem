@@ -18,9 +18,9 @@ const LandingPage: React.FC = ({ theme }) => {
   console.log("👾 | theme:", theme);
 
   return (
-    <div>
+    <>
       <div
-        style={{
+        className={css({
           display: "flex",
           width: "100%",
           flexDirection: "column",
@@ -28,14 +28,20 @@ const LandingPage: React.FC = ({ theme }) => {
           maxWidth: "960px",
           gap: "2rem",
           marginBottom: "-2.5rem",
-        }}
+          "@media (max-width:1024px)": {
+            marginBottom: "0",
+          },
+        })}
       >
         <div
-          style={{
+          className={css({
             display: "grid",
             gap: "2rem",
             gridTemplateColumns: "600px auto",
-          }}
+            "@media (max-width:1024px)": {
+              gridTemplateColumns: "auto",
+            },
+          })}
         >
           <div
             style={{
@@ -63,6 +69,9 @@ const LandingPage: React.FC = ({ theme }) => {
               justifyContent: "center",
               alignItems: "center",
               height: "240px",
+              "@media (max-width:1024px)": {
+                display: "none",
+              },
             })}
           >
             <Logo
@@ -74,12 +83,21 @@ const LandingPage: React.FC = ({ theme }) => {
           </Card>
         </div>
         <div
-          style={{
+          className={css({
             display: "flex",
             justifyContent: "space-between",
             position: "relative",
             top: "-4rem",
-          }}
+            "@media (max-width:1024px)": {
+              top: "0",
+              gap: "4rem",
+            },
+            "@media (max-width:850px)": {
+              flexDirection: "column",
+              gap: "2rem",
+              justifyContent: "center",
+            },
+          })}
         >
           <TypographicList
             listArray={[
@@ -92,14 +110,24 @@ const LandingPage: React.FC = ({ theme }) => {
               top: "8rem",
               left: "2rem",
               zIndex: -1,
+              "@media (max-width:1024px)": {
+                top: "0",
+              },
+              "@media (min-width:720px) and (max-width:850px)": {
+                flexDirection: "row",
+                justifyContent: "center",
+                left: "0",
+              },
             })}
           />
           <div
-            style={{
+            className={css({
               width: "440px",
-            }}
+              "@media (max-width:1024px)": {
+                width: "100%",
+              },
+            })}
           >
-            {" "}
             <Card>
               <Title>Don’t know how much cash you have? </Title>
               <Subtitle className="text-muted">
@@ -120,7 +148,7 @@ const LandingPage: React.FC = ({ theme }) => {
           <BsPlusLg className="icon-button-svg" />
         </Button>
       </div>
-    </div>
+    </>
   );
 };
 

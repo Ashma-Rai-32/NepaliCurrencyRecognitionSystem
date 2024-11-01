@@ -3,6 +3,7 @@ import Button from "./Button";
 
 const TypographicList: React.FC<{
   listArray: Array<object>;
+  className: string;
 }> = ({ listArray, className }) => {
   return (
     <div className={classNames("typographic-list", className)}>

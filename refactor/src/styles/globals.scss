@@ -14,6 +14,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Days+One&display=swap');
 @import "./variables.scss";
+@import "./choicechip";
+@import "./tab";
+@import "./modelCarousel";
 
 html,
 body {
@@ -104,6 +107,10 @@ a {
 
 .text-muted {
   color: $text-muted;
+}
+
+.text-background {
+  color: $background;
 }
 
 //layout
@@ -298,6 +305,7 @@ a {
     display: flex;
     gap: 1rem;
     align-items: center;
+    text-wrap: nowrap;
 
     .listitem-icon {
       background-color: $background;
@@ -431,3 +439,4 @@ a {
 
 
 @import "./scan";
+@import "./model"
