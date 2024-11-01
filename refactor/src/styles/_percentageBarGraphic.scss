@@ -1,0 +1,32 @@
+.percentage-bar-graphic {
+
+    display: flex;
+    flex-direction: row;
+    gap: 6px;
+    height: 2rem;
+    // border-radius: 2rem;
+
+    // .background-bar {
+    //     width: 100%;
+    //     height: inherit;
+    //     border-radius: inherit;
+    //     background-color: $background-light;
+    // }
+
+    .progress-bar {
+        position: relative;
+        // top: -1rem;
+        width: 20px;
+        height: inherit;
+        background-color: $text-muted;
+        display: flex;
+        justify-content: flex-end;
+        transform: skewX(-36deg);
+        border-radius: 4px 8px;
+
+    }
+
+    .bar {
+        width: 1.25rem;
+    }
+}

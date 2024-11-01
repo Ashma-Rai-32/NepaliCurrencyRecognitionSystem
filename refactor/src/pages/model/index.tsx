@@ -21,6 +21,10 @@ import PercentageBar from "@/src/components/PercentageBar";
 import ChoiceChip from "@/src/components/ChoiceChip";
 import Tab from "@/src/components/Tab";
 import ModelCarousel from "@/src/components/ModelCarousel";
+import ConfusionMatrix from "@/src/components/ConfusionMatrix";
+import Table from "@/src/components/Table";
+import TypographicTitle from "@/src/components/TypographicTitle";
+import TabGraphic from "@/src/components/TabGraphic";
 
 const Model: React.FC = ({ theme }) => {
   const [file, setFile] = useState();
@@ -94,7 +98,6 @@ const Model: React.FC = ({ theme }) => {
         computational efficiency, while softmax outputs probabilities to
         identify the most likely denomination accurately.
       </Subtitle>
-
       <div
         className={css({
           display: "flex",
@@ -165,7 +168,6 @@ const Model: React.FC = ({ theme }) => {
           <ChoiceChip options={model.evaluationModes} />
         </div>{" "}
       </div>
-
       {/* trainings */}
       <div
         className={css({
@@ -186,27 +188,128 @@ const Model: React.FC = ({ theme }) => {
         </div>
         <ModelCarousel />
       </div>
-      <Card>
-        <Title> {model.description.title}</Title>
-        {model.description.content}
-      </Card>
-      <Card>
-        <Title>{model.keyFeatures.title}</Title>
-      </Card>
-      <Title>{model.importance.title}</Title>
-      <Subtitle>{model.importance.content}</Subtitle>
-      <Card>
-        <Title>{model.journey.title}</Title>
-        <Subtitle>{model.journey.content}</Subtitle>
-      </Card>
-      <Card>
-        <Title>{model.report.title}</Title>
-        {model.report.introduction}
-        <Card>
-          <PdfViewer fileUrl="/report.pdf" />
+      {/* result  */}
+      <div
+        className={css({
+          display: "flex",
+          flexDirection: "column",
+        })}
+      >
+        <div
+          className={classNames(
+            "typography",
+            css({
+              fontSize: "4rem",
+            })
+          )}
+        >
+          result
+        </div>
+        <div
+          className={css({
+            display: "flex",
+            gap: "2rem",
+            direction: "row",
+          })}
+        >
+          {/* // confusion matrix */}
+          <ConfusionMatrix />
+          <div
+            className={css({
+              display: "flex",
+              gap: "2rem",
+              flexDirection: "column",
+            })}
+          >
+            <div className="typography">confusion matrix</div>
+            The confusion matrix for the final model revealed important insights
+            into its performance across currency denominations. The model
+            achieved high accuracy, especially with Rupees 50 and 1000,
+            exceeding 95%. However, it struggled with denominations like Rupees
+            10 and 20, which showed lower precision and recall due to their
+            visual similarities. Analysis of the misclassifications indicated
+            that Rupees 10 was often mistaken for Rupees 5. This pattern
+            underscores the need to enhance the training dataset by
+            incorporating more diverse images of lower-denomination notes.
+          </div>
+        </div>
+      </div>
+      {/* evaluatio metrics result  */}
+      <div
+        className={css({
+          display: "flex",
+          gap: "2rem",
+          direction: "row",
+        })}
+      >
+        <div
+          className={css({
+            display: "flex",
+            gap: "2rem",
+            flexDirection: "column",
+          })}
+        >
+          <TypographicTitle>evaluation metrics result</TypographicTitle>
+          The table summarizes the precision, recall, F1-score, and support for
+          each currency denomination, highlighting the model's effectiveness in
+          classifying different notes.
+        </div>
+        <Table />
+      </div>
+      <div
+        className={css({
+          display: "flex",
+          gap: "2rem",
+          direction: "row",
+        })}
+      >
+        <div
+          className={css({
+            display: "flex",
+            gap: "2rem",
+            flexDirection: "column",
+          })}
+        >
+          <TypographicTitle>metrics analysis summary</TypographicTitle>
+          Averaged values of the evaluation metrics for each denomination
+        </div>
+        <TabGraphic />
+      </div>
+      <div
+        className={css({
+          display: "grid",
+          gridTemplateColumns: "1fr 1fr",
+          gap: "2rem",
+        })}
+      >
+        {" "}
+        <Card outlined>
+          <Title>{model.journey.title}</Title>
+          <Subtitle className="text-muted">{model.journey.content}</Subtitle>
         </Card>
-      </Card>
-      <Button onClick={() => {}}>{model.callToAction.title}</Button>
+        <div
+          className={css({
+            display: "flex",
+            flexDirection: "column",
+            gap: "2rem",
+            alignItems: "flex-end",
+          })}
+        >
+          {" "}
+          <Card>
+            <Title>{model.report.title}</Title>
+            <Subtitle className="text-muted">
+              {model.report.introduction}
+            </Subtitle>
+            {/* <Card>
+              <PdfViewer fileUrl="/report.pdf" />
+            </Card> */}
+          </Card>
+          <Button onClick={() => {}}>{model.callToAction.title}</Button>
+          <Button onClick={() => {}}>{model.callToAction.title}</Button>
+        </div>{" "}
+      </div>
+
       {model.contact.content}
     </>
   );

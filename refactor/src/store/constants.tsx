@@ -66,9 +66,9 @@ const model = {
       "The journey to develop this project has been both challenging and rewarding. Starting from brainstorming sessions, we dove into researching image processing techniques and machine learning algorithms. After countless hours of coding, testing, and refining, we created a working prototype. We've learned a lot about teamwork, problem-solving, and the technical aspects of software development. This project has not only enhanced our coding skills but also deepened our understanding of real-world applications of technology.",
   },
   report: {
-    title: "Project Report",
+    title: "Full report on NCR Model",
     introduction:
-      "We have compiled a detailed report documenting our project's development process, technical specifications, and findings. The report includes insights into our research, the challenges we faced, and how we overcame them. We invite you to explore our work in the embedded PDF report below.",
+      "We have compiled a detailed report documenting our project's development process, technical specifications, and findings. The report includes insights into our research, the challenges we faced, and how we overcame them.",
     linkText: "View Project Report (PDF)",
   },
   callToAction: {
@@ -110,6 +110,104 @@ const model = {
         " Model 3 was the final iteration, featuring a more advanced deep learning architecture, specifically a deeper CNN with residual connections and batch normalization. This model also incorporated extensive data collection efforts to ensure a more robust dataset with diverse images of each denomination. The resulting accuracy reached 95%, with precision for Rupees 50 and 1000 soaring to 0.98 and 0.96, respectively.   The confusion matrix demonstrated substantial improvements in recall, particularly for lower denominations, underscoring the model’s capability to accurately classify all notes. The combination of an optimized architecture and meticulously curated dataset led to the selection of Model 3 as our final model.",
     },
   ],
+
+  confusionMatrix: {
+    classes: ["5", "10", "20", "50", "100", "500", "1000"],
+    data: [
+      [485, 0, 2, 2, 7, 17, 2], // Actual 50
+      [0, 485, 0, 0, 0, 0, 16], // Actual 5
+      [0, 0, 484, 1, 0, 14, 0], // Actual 500
+      [8, 0, 5, 485, 7, 10, 6], // Actual 100
+      [2, 7, 17, 49, 348, 20, 2], // Actual 10
+      [0, 0, 0, 0, 6, 492, 0], // Actual 1000
+      [0, 12, 0, 0, 3, 3, 330], // Actual 20
+    ],
+
+    support: [515, 501, 501, 521, 445, 501, 350],
+  },
+
+  result: {
+    table: {
+      columns: [
+        {
+          key: "class",
+          label: "Class",
+          sortable: true,
+        },
+        {
+          key: "precision",
+          label: "Precision",
+          sortable: true,
+        },
+        {
+          key: "recall",
+          label: "Recall",
+          sortable: true,
+        },
+        {
+          key: "f1Score",
+          label: "F1-Score",
+          sortable: true,
+        },
+        {
+          key: "support",
+          label: "Support",
+          sortable: true,
+        },
+      ],
+      data: [
+        {
+          class: 0,
+          precision: 0.98,
+          recall: 0.94,
+          f1Score: 0.96,
+          support: 515,
+        },
+        {
+          class: 1,
+          precision: 0.96,
+          recall: 0.97,
+          f1Score: 0.96,
+          support: 501,
+        },
+        {
+          class: 2,
+          precision: 0.95,
+          recall: 0.97,
+          f1Score: 0.96,
+          support: 501,
+        },
+        {
+          class: 3,
+          precision: 0.89,
+          recall: 0.93,
+          f1Score: 0.91,
+          support: 521,
+        },
+        {
+          class: 4,
+          precision: 0.95,
+          recall: 0.78,
+          f1Score: 0.86,
+          support: 445,
+        },
+        {
+          class: 5,
+          precision: 0.88,
+          recall: 0.98,
+          f1Score: 0.93,
+          support: 501,
+        },
+        {
+          class: 6,
+          precision: 0.93,
+          recall: 0.94,
+          f1Score: 0.93,
+          support: 350,
+        },
+      ],
+    },
+  },
 };
 
 export { model };

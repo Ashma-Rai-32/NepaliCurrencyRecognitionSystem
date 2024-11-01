@@ -1,0 +1,35 @@
+@mixin row {
+    display: flex;
+    flex-direction: row;
+}
+
+@mixin cell {
+    width: 7.5rem;
+    padding: 0.5rem 0;
+}
+
+.table-container {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+
+    .table-heading {
+        @include row();
+
+        .heading-cell {
+            @extend .heading-3, .text-muted;
+            @include cell;
+            padding: 0;
+        }
+    }
+
+    .table-row {
+        @include row();
+
+        border-bottom: 1px solid $text-muted;
+
+        .data-cell {
+            @include cell();
+        }
+    }
+}

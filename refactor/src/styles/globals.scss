@@ -16,7 +16,11 @@
 @import "./variables.scss";
 @import "./choicechip";
 @import "./tab";
+@import "./tabGraphic";
 @import "./modelCarousel";
+@import "./confusionMatrix";
+@import "./table";
+@import "./percentageBarGraphic";
 
 html,
 body {
@@ -48,6 +52,11 @@ a {
   font-weight: 400;
   letter-spacing: 0em;
   text-transform: capitalize;
+}
+
+.typographic-title {
+  @extend .typography;
+
 }
 
 .subtitle {
@@ -174,6 +183,11 @@ a {
 
   &.input {
     cursor: pointer
+  }
+
+  &.outlined {
+    background-color: white;
+    border: 1px solid $text-muted;
   }
 
 }
