@@ -1,13 +1,10 @@
 import classNames from "classnames";
-import React, { useEffect, useState, useCallback, useRef } from "react";
-import { CiCircleInfo } from "react-icons/ci";
-import Heading3 from "./Heading3";
+import React from "react";
 import Heading2 from "./Heading2";
 import { css } from "@emotion/css";
-import PercentageBar from "./PercentageBar";
 import PercentageBarGraphic from "./PercentageBarGraphic";
 
-const TabGraphic: React.FC<{ className: string }> = ({ className }) => {
+const TabGraphic: React.FC<{ className?: string }> = ({}) => {
   const data = [
     {
       title: "precision",

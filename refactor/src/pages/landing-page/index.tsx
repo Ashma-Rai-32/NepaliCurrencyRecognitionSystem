@@ -1,20 +1,16 @@
-import LogoFirstLetter from "@/src/assets/logo-first-letter";
 import Button from "@/src/components/Button";
 import Card from "@/src/components/Card";
 import CardOverlapped from "@/src/components/CardOverlapped";
-import Heading1 from "@/src/components/Heading1";
 import Logo from "@/src/components/Logo";
-import IconButtonGroup from "@/src/components/IconButtonGroup";
 import Subtitle from "@/src/components/Subtitle";
 import Title from "@/src/components/Title";
 import TypographicList from "@/src/components/TypographicList";
 import { css } from "@emotion/css";
-import { RootState } from "@reduxjs/toolkit/query";
 import { connect } from "react-redux";
 import { BsPlusLg } from "react-icons/bs";
-import Footer from "@/src/components/Footer";
+import { RootState } from "@/src/store/store";
 
-const LandingPage: React.FC = ({ theme }) => {
+const LandingPage: React.FC<{ theme?: string }> = ({ theme }) => {
   console.log("👾 | theme:", theme);
 
   return (

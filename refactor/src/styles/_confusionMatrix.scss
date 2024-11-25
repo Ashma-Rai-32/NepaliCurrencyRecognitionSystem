@@ -84,6 +84,10 @@
 
 
                 @extend .typography, .text-muted;
+
+                &:hover {
+                    background-color: $background-light;
+                }
             }
         }
     }

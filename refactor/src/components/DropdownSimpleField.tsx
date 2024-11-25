@@ -1,29 +1,21 @@
-// import { css } from "@emotion/css";
-// import classNames from "classnames";
-
-import Link from "next/link";
-import { RiArrowDownSLine, RiArrowDownWideLine } from "react-icons/ri";
-import IconButton from "./IconButton";
-import { act, useState } from "react";
+import { RiArrowDownSLine } from "react-icons/ri";
+import { useState } from "react";
 import classNames from "classnames";
-import { css } from "@emotion/css";
 
 type DropdownSimpleFieldProps = {
-  onClick: () => void;
+  onClick?: () => void;
   className?: string;
-  children: React.ReactNode;
+  children?: React.ReactNode;
+  label?: string;
+  options: Array<{ value: string; label: string }>;
 };
 
 const DropdownSimpleField: React.FC<DropdownSimpleFieldProps> = ({
-  className,
-  onClick,
-  href,
   label,
   options,
-  children,
 }) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
-  const [value, setValue] = useState(null);
+  const [value, setValue] = useState<string | null>(null);
 
   const renderOptions = () => {
     return (

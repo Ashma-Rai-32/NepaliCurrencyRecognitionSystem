@@ -1,13 +1,13 @@
-// import { css } from "@emotion/css";
-// import classNames from "classnames";
-
 import classNames from "classnames";
 import Link from "next/link";
 
 type ButtonProps = {
-  onClick: () => void;
+  onClick?: () => void;
   className?: string;
-  children: React.ReactNode;
+  children?: React.ReactNode;
+  href?: string;
+  disabled?: boolean;
+  variant?: "outline" | null;
 };
 
 const Button: React.FC<ButtonProps> = ({

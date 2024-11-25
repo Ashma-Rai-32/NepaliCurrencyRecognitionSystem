@@ -3,15 +3,15 @@
 
 import { css } from "@emotion/css";
 import classNames from "classnames";
-import Link from "next/link";
 
 type PercentageBarProps = {
-  onClick: () => void;
+  onClick?: () => void;
   className?: string;
-  children: React.ReactNode;
+  children?: React.ReactNode;
+  value?: number;
 };
 
-const PercentageBar: React.FC<PercentageBarProps> = ({ className, value }) => {
+const PercentageBar: React.FC<PercentageBarProps> = ({ value }) => {
   return (
     <div className="percentage-bar">
       <div className="background-bar"></div>

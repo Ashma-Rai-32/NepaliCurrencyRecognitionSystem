@@ -1,17 +1,14 @@
-// import { css } from "@emotion/css";
-// import classNames from "classnames";
-
 import { css } from "@emotion/css";
 import classNames from "classnames";
-import Link from "next/link";
 
 type PercentageBarProps = {
-  onClick: () => void;
+  onClick?: () => void;
   className?: string;
-  children: React.ReactNode;
+  children?: React.ReactNode;
+  value?: number;
 };
 
-const roundOff = (value) => {
+const roundOff = (value: number) => {
   return Math.round(value * 4) / 4;
 };
 
@@ -30,7 +27,7 @@ const quarter1Svg = (
   </svg>
 );
 
-const quarter4Svg = (color) => {
+const quarter4Svg = (color: string) => {
   return (
     <svg
       width="39"
@@ -77,10 +74,7 @@ const quarter3Svg = (
   </svg>
 );
 
-const PercentageBarGraphic: React.FC<PercentageBarProps> = ({
-  className,
-  value,
-}) => {
+const PercentageBarGraphic: React.FC<PercentageBarProps> = ({ value = 0 }) => {
   console.log("👾 | value:", value);
 
   const processedValue = roundOff(value * 100);

@@ -4,10 +4,10 @@ import Title from "./Title";
 import { useRef, useState } from "react";
 import { model } from "../store/constants";
 
-const Table: React.FC<{ children: React.ReactNode }> = ({
-  children,
-  className,
-}) => {
+const Table: React.FC<{
+  children?: React.ReactNode;
+  className?: string;
+}> = ({}) => {
   const columns = model.result.table.columns;
   const data = model.result.table.data;
   return (

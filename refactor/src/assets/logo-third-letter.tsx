@@ -1,8 +1,9 @@
-const LogoThirdLetter: React.FC = () => {
+const LogoThirdLetter: React.FC = ({ width }) => {
+  const aspectRatio = 81 / 56;
   return (
     <svg
-      width="81"
-      height="56"
+      width={width || "81"}
+      height={width ? width / aspectRatio : "56"}
       viewBox="0 0 81 56"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"

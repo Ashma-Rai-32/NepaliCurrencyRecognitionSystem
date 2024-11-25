@@ -4,10 +4,7 @@ import Title from "./Title";
 import { useRef, useState } from "react";
 import { model } from "../store/constants";
 
-const ModelCarousel: React.FC<{ children: React.ReactNode }> = ({
-  children,
-  className,
-}) => {
+const ModelCarousel: React.FC<{ className?: string }> = ({ className }) => {
   const models = [
     {
       label: "m1",
@@ -26,16 +23,21 @@ const ModelCarousel: React.FC<{ children: React.ReactNode }> = ({
   const description =
     "Model 1 was designed using a basic convolutional neural network (CNN) architecture, which included a few convolutional layers followed by max-pooling layers and a fully connected layer. This straightforward design achieved an overall accuracy of 85%. The precision values for different denominations varied, with Rupees 10 at 0.82 and Rupees 50 at 0.91. While this model provided a good starting point, the confusion matrix indicated significant mis-classifications, particularly between Rupees 10 and 5, revealing a need for more sophisticated approaches and data refinement.";
 
-  const modelRefs = useRef([]);
+  const modelRefs = useRef<(HTMLDivElement | null)[]>([]);
   const [activeModel, setActiveModel] = useState(0);
   const gridTemplateColumnsForModelCarousel = [
     "auto 4rem 320px",
     "4rem auto 320px",
     "4rem 4rem auto",
   ];
-  const onModelHover = (e, index) => {
+
+  const onModelHover = (
+    e: React.MouseEvent<HTMLDivElement>,
+    index: number
+  ): void => {
     setActiveModel(index);
   };
+
   return (
     <div
       className={css({
@@ -89,7 +91,9 @@ const ModelCarousel: React.FC<{ children: React.ReactNode }> = ({
               })
             )}
             onMouseEnter={(e) => onModelHover(e, index)}
-            ref={(el) => (modelRefs.current[index] = el)}
+            ref={(el: HTMLDivElement | null) => {
+              modelRefs.current[index] = el;
+            }}
           ></div>
         ))}
         {/* <div

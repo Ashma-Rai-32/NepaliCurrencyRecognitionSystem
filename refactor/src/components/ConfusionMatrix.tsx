@@ -1,10 +1,8 @@
 import { css } from "@emotion/css";
 import classNames from "classnames";
-import Title from "./Title";
-import { useRef, useState } from "react";
 import { model } from "../store/constants";
 
-const interpolateColor = (percentage) => {
+const interpolateColor = (percentage: number) => {
   const LIGHT_HEX = `#ffffff`;
   const DARK_HEX = `#0d0d0d`;
   const [r1, g1, b1] = hexToRgb(LIGHT_HEX);
@@ -18,7 +16,7 @@ const interpolateColor = (percentage) => {
 };
 
 // Helper function to convert HEX to RGB
-const hexToRgb = (hex) => {
+const hexToRgb = (hex: string) => {
   let r = 0,
     g = 0,
     b = 0;
@@ -34,10 +32,10 @@ const hexToRgb = (hex) => {
   return [r, g, b];
 };
 
-const ConfusionMatrix: React.FC<{ children: React.ReactNode }> = ({
-  children,
-  className,
-}) => {
+const ConfusionMatrix: React.FC<{
+  children?: React.ReactNode;
+  className?: string;
+}> = ({}) => {
   return (
     <div className="confusion-matrix-container">
       <div className="tl">tl</div>

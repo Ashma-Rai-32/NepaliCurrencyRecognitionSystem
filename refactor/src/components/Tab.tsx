@@ -1,5 +1,5 @@
 import classNames from "classnames";
-import React, { useEffect, useState, useCallback, useRef } from "react";
+import React from "react";
 import { CiCircleInfo } from "react-icons/ci";
 // Define the type for each option
 interface Option {
@@ -9,11 +9,11 @@ interface Option {
 }
 
 // Define props type for ChoiceChip
-interface ChoiceChipProps {
-  options: Option[];
+interface TabProps {
+  options?: Option[];
 }
 
-const Tab: React.FC<ChoiceChipProps> = ({}) => {
+const Tab: React.FC<TabProps> = ({}) => {
   const options = [
     { title: "5", count: 1500, subtitle: "14.52%" },
     { title: "5", count: 1500, subtitle: "14.52%" },

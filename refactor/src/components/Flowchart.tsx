@@ -1,9 +1,6 @@
 import classNames from "classnames";
 
-const Flowchart: React.FC<{ children: React.ReactNode }> = ({
-  children,
-  className,
-}) => {
+const Flowchart: React.FC<{ className?: string }> = ({ className }) => {
   const options = [
     {
       label: "start",

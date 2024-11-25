@@ -8,3 +8,6 @@ export const store = configureStore({
     model: modelReducer,
   },
 });
+
+// Export RootState type by inferring it from store.getState()
+export type RootState = ReturnType<typeof store.getState>;

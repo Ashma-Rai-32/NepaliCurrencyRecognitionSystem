@@ -1,10 +1,10 @@
 import classNames from "classnames";
 
-const Card: React.FC<{ children: React.ReactNode }> = ({
-  children,
-  className,
-  outlined,
-}) => {
+const Card: React.FC<{
+  children?: React.ReactNode;
+  className?: string;
+  outlined?: boolean;
+}> = ({ children, className, outlined }) => {
   return (
     <div className={classNames("card", { outlined: outlined }, className)}>
       {children}
