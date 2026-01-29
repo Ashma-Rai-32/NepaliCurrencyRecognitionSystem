@@ -1,13 +1,16 @@
 import PercentageBar from "./PercentageBar";
 
-const StatisticsTile: React.FC<{ children: React.ReactNode }> = ({
-  children,
+type StatisticsTileProps = {
+  options: Array<{ type: string; value: number | string; label: string }>;
+};
+
+const StatisticsTile: React.FC<StatisticsTileProps> = ({
   options,
 }) => {
-  const renderStatisticsItem = ({ option }) => {
+  const renderStatisticsItem = ({ option }: { option: { type: string; value: number | string; label: string } }) => {
     switch (option.type) {
       case "percentage-bar":
-        return <PercentageBar value={option.value} />;
+        return <PercentageBar value={typeof option.value === 'number' ? option.value : 0} />;
       default:
         return null;
     }

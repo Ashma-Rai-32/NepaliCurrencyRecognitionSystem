@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Footer from "./Footer";
 import Header from "./Header";
 import Sidebar from "./Sidebar";
-import { AnimatePresence, easeOut, motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 
 const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const variants = {

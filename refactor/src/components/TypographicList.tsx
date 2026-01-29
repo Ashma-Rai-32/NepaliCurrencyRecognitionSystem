@@ -1,8 +1,7 @@
 import classNames from "classnames";
-import Button from "./Button";
 
 const TypographicList: React.FC<{
-  listArray: Array<object>;
+  listArray: Array<{ label?: string }>;
   className: string;
 }> = ({ listArray, className }) => {
   return (

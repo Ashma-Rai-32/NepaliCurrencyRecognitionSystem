@@ -1,21 +1,17 @@
 import classNames from "classnames";
-import { useRef, useState } from "react";
+import { useRef } from "react";
 
 type CardInputProps = {
   children?: React.ReactNode;
   className?: string;
-  onClick?: () => void;
   type?: string;
-  file?: File | null;
   setFile: (file: File) => void;
 };
 
 const CardInput = ({
   children,
   className,
-  onClick,
   type,
-  file,
   setFile,
 }: CardInputProps) => {
   const fileInputRef = useRef<HTMLInputElement | null>(null);
@@ -52,7 +48,7 @@ const CardInput = ({
       />
       <div
         className={classNames("card", { input: type === "input" }, className)}
-        onClick={(e) => {
+        onClick={() => {
           // e.stopPropagation();
           console.log("DIV CLCIKED");
           handleClick();

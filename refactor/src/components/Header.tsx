@@ -1,7 +1,6 @@
-import IconButtonGroup from "./IconButtonGroup";
 import Logo from "./Logo";
 
-const Header: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+const Header = () => {
   return (
     <div className="header-container">
       <Logo />

@@ -29,7 +29,7 @@ const Model = () => {
       <div className="section-1">
         <div className="grid-wrapper">
           <Card className="cell-1">
-            <Logo size="80" />
+            <Logo size={80} />
           </Card>
           <Card className="cell-2">
             <Title>{model.title}</Title>

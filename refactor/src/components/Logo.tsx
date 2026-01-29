@@ -6,7 +6,7 @@ import { css } from "@emotion/css";
 
 const Logo: React.FC<{
   className?: string;
-  size?: number | string;
+  size?: number;
 }> = ({ className, size }) => {
   return (
     <div

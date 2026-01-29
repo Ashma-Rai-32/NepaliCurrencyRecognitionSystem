@@ -1,12 +1,12 @@
 import { useRouter } from "next/router";
 import IconButtonGroup from "./IconButtonGroup";
 
-const Sidebar: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+const Sidebar = () => {
   const router = useRouter();
 
   console.log("👾 | router:", router);
 
-  const handleRouter = (route) => {
+  const handleRouter = (route: string) => {
     console.log("👾 | route:", route);
 
     router.push(route);
@@ -19,21 +19,21 @@ const Sidebar: React.FC<{ children: React.ReactNode }> = ({ children }) => {
           {
             label: "home",
             icon: "home",
-            onClick: (e) => {
+            onClick: () => {
               handleRouter("/landing-page");
             },
           },
           {
             label: "search",
             icon: "search",
-            onClick: (e) => {
+            onClick: () => {
               handleRouter("/scan");
             },
           },
           {
             label: "model",
             icon: "model",
-            onClick: (e) => {
+            onClick: () => {
               handleRouter("/model");
             },
           },

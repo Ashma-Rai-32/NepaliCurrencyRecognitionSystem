@@ -17,6 +17,7 @@ type PdfViewerProps = {
 
 const PdfViewer: React.FC<PdfViewerProps> = ({ fileUrl }) => {
   const [pageIndex, setPageIndex] = useState(0);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [numPages, setNumPages] = useState(0);
 
   // Custom toolbar component for page navigation
@@ -108,7 +109,6 @@ const PdfViewer: React.FC<PdfViewerProps> = ({ fileUrl }) => {
               setPageIndex(currentPage - 1);
             }}
             renderPage={renderPage}
-            style={{ height: "100%" }}
           />
         </div>
       </Worker>

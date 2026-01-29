@@ -6,14 +6,11 @@ import { RiHomeFill, RiSearchFill } from "react-icons/ri";
 
 type ButtonProps = {
   onClick: () => void;
-  className?: string;
-  children: React.ReactNode;
+  icon?: string;
 };
 
 const IconButton: React.FC<ButtonProps> = ({
-  className,
   onClick,
-  children,
   icon,
 }) => {
   const renderIcon = () => {

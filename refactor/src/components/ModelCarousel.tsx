@@ -5,23 +5,6 @@ import { useRef, useState } from "react";
 import { model } from "../store/constants";
 
 const ModelCarousel: React.FC<{ className?: string }> = ({ className }) => {
-  const models = [
-    {
-      label: "m1",
-      shade: "bg-text-muted",
-    },
-    {
-      label: "m2",
-      shade: "bg-background",
-    },
-    {
-      label: "m3",
-      shade: "bg-background-light",
-    },
-  ];
-
-  const description =
-    "Model 1 was designed using a basic convolutional neural network (CNN) architecture, which included a few convolutional layers followed by max-pooling layers and a fully connected layer. This straightforward design achieved an overall accuracy of 85%. The precision values for different denominations varied, with Rupees 10 at 0.82 and Rupees 50 at 0.91. While this model provided a good starting point, the confusion matrix indicated significant mis-classifications, particularly between Rupees 10 and 5, revealing a need for more sophisticated approaches and data refinement.";
 
   const modelRefs = useRef<(HTMLDivElement | null)[]>([]);
   const [activeModel, setActiveModel] = useState(0);

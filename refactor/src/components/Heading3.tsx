@@ -1,6 +1,6 @@
 import classNames from "classnames";
 
-const Heading3: React.FC<{ children: React.ReactNode }> = ({
+const Heading3: React.FC<{ children: React.ReactNode; className?:string }> = ({
   children,
   className,
 }) => {

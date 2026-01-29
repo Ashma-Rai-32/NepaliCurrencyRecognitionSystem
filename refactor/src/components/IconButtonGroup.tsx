@@ -1,18 +1,10 @@
-// import { css } from "@emotion/css";
-// import classNames from "classnames";
-
-import Button from "./Button";
 import IconButton from "./IconButton";
 
 type IconButtonGroupProps = {
-  onClick: () => void;
-  className?: string;
-  children: React.ReactNode;
+  options: Array<{ icon: string; onClick: () => void; label?: string }>;
 };
 
 const IconButtonGroup: React.FC<IconButtonGroupProps> = ({
-  className,
-  onClick,
   options,
 }) => {
   return (

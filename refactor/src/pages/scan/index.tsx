@@ -4,7 +4,7 @@ import Heading1 from "@/src/components/Heading1";
 import Subtitle from "@/src/components/Subtitle";
 import Title from "@/src/components/Title";
 import { css } from "@emotion/css";
-import { RootState } from "@reduxjs/toolkit/query";
+import { RootState } from "@/src/store/store";
 import { connect } from "react-redux";
 import { RiCamera3Fill, RiSearchFill } from "react-icons/ri";
 import classNames from "classnames";
@@ -12,39 +12,43 @@ import ImageThumbnail from "@/src/assets/image-thumbnail";
 import { IoVolumeLow } from "react-icons/io5";
 import StatisticsTile from "@/src/components/StatisticsTile";
 import DropdownSimpleField from "@/src/components/DropdownSimpleField";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import CardInput from "@/src/components/CardInput";
 import axios from "axios";
 import { motion } from "framer-motion";
 import Heading3 from "@/src/components/Heading3";
 import { updateModelHistory } from "@/src/store/model-slice";
 import {
-  MdOutlineArrowBackIos,
-  MdOutlineArrowForwardIos,
   MdOutlineKeyboardArrowLeft,
   MdOutlineKeyboardArrowRight,
 } from "react-icons/md";
 
-type ScanProps = {
-  theme?: string;
-  modelHistory: Record<string, unknown>;
-  updateModelHistory: (data: unknown) => void;
+type ModelHistoryEntry = {
+  fileImageUrl: string;
+  fileMetadata: { name: string; size: number; lastModified: number };
+  result: { prediction: string; confidence: number };
 };
 
-const Scan = ({ theme, modelHistory, updateModelHistory }: ScanProps) => {
+type ScanProps = {
+  modelHistory: Record<string, ModelHistoryEntry>;
+  updateModelHistory: (data: ModelHistoryEntry) => void;
+};
+
+const Scan = ({ modelHistory, updateModelHistory }: ScanProps) => {
   console.log("👾 | modelHistory:", modelHistory);
 
-  const fileInputRef = useRef(null);
-
-  const [file, setFile] = useState();
+  const [file, setFile] = useState<File | undefined>();
 
   console.log("👾 | file:", file);
 
-  const [modelResult, setModelResult] = useState(null);
-  const [showSubmitAnother, setShowSubmitAnother] = useState(false);
+  const [modelResult, setModelResult] = useState<{
+    fileMetadata: { name: string; size: number; lastModified: number };
+    fileImageUrl: string;
+    result: unknown;
+  } | null>(null);
 
   const [scanPageIndex, setScanPageIndex] = useState(0); //0: initial, 1: show submit another pic
-  const [modelHistoryIndex, setModelHistoryIndex] = useState(null); //0: initial, 1: show submit another pic
+  const [modelHistoryIndex, setModelHistoryIndex] = useState<number | null>(null); //0: initial, 1: show submit another pic
 
   console.log("👾 | modelHistoryIndex:", modelHistoryIndex);
 
@@ -62,6 +66,7 @@ const Scan = ({ theme, modelHistory, updateModelHistory }: ScanProps) => {
     try {
       console.log("👾 | file:", file);
 
+      if (!file) return;
       const formData = new FormData();
       formData.append("imagefile", file);
       const response = await axios.post("http://localhost:5000/", formData);
@@ -82,7 +87,7 @@ const Scan = ({ theme, modelHistory, updateModelHistory }: ScanProps) => {
         setModelResult(modelResult);
         updateModelHistory(modelResult);
         setModelHistoryIndex(Object.keys(modelHistory)?.length);
-        setFile(null);
+        setFile(undefined);
       } else {
         throw new Error("SERVER ERROR");
       }
@@ -109,7 +114,6 @@ const Scan = ({ theme, modelHistory, updateModelHistory }: ScanProps) => {
           className={classNames("text-muted", "card-input", {
             "second-phase": scanPageIndex === 1,
           })}
-          file={file}
           setFile={setFile}
           type="input"
         >
@@ -121,24 +125,18 @@ const Scan = ({ theme, modelHistory, updateModelHistory }: ScanProps) => {
                   width: "auto",
                   height: "100%",
                   objectFit: "cover",
-                  maxHeight: scanPageIndex === 1 ? "64px" : "400px",
+                  maxHeight: "400px",
                 }}
               />
             ) : (
               <div className="body-container">
                 <Heading1>
-                  {file ? (
-                    file.name
-                  ) : (
-                    <>
-                      <RiCamera3Fill className="icon-button-svg" />
-                      Click a picture
-                    </>
-                  )}
+                  <>
+                    <RiCamera3Fill className="icon-button-svg" />
+                    Click a picture
+                  </>
                 </Heading1>
-                {file
-                  ? Math.floor(file.size / 1024) + "MB"
-                  : "Please submit a picture of Nepali bill you want to classify."}
+                Please submit a picture of Nepali bill you want to classify.
               </div>
             )
           ) : file ? (
@@ -173,10 +171,7 @@ const Scan = ({ theme, modelHistory, updateModelHistory }: ScanProps) => {
             }}
           >
             <Button
-              onClick={(e) => {
-                e.preventDefault();
-
-                e.stopPropagation();
+              onClick={() => {
                 classify();
               }}
               disabled={!file}
@@ -269,7 +264,7 @@ const Scan = ({ theme, modelHistory, updateModelHistory }: ScanProps) => {
                         onClick={
                           modelHistoryIndex <= 0
                             ? undefined
-                            : () => setModelHistoryIndex((prev) => prev - 1)
+                            : () => setModelHistoryIndex((prev) => (prev ?? 1) - 1)
                         }
                       />
                       {modelHistoryIndex + 1}/{Object.keys(modelHistory).length}
@@ -284,7 +279,7 @@ const Scan = ({ theme, modelHistory, updateModelHistory }: ScanProps) => {
                           modelHistoryIndex + 1 >=
                           Object.keys(modelHistory).length
                             ? undefined
-                            : () => setModelHistoryIndex((next) => next + 1)
+                            : () => setModelHistoryIndex((prev) => (prev ?? 0) + 1)
                         }
                       />
                     </div>

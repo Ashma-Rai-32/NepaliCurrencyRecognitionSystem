@@ -74,7 +74,9 @@ const ChoiceChip: React.FC<ChoiceChipProps> = ({ options }) => {
             className={classNames("option", {
               active: formValue === option.name,
             })}
-            ref={(el) => (optionRefs.current[index] = el)}
+            ref={(el) => {
+              optionRefs.current[index] = el;
+            }}
             onClick={() => handleOptionClick(option.name, index)}
           >
             {option.label}

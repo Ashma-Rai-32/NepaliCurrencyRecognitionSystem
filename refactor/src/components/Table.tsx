@@ -1,19 +1,12 @@
-import { css } from "@emotion/css";
-import classNames from "classnames";
-import Title from "./Title";
-import { useRef, useState } from "react";
 import { model } from "../store/constants";
 
-const Table: React.FC<{
-  children?: React.ReactNode;
-  className?: string;
-}> = ({}) => {
+const Table = () => {
   const columns = model.result.table.columns;
-  const data = model.result.table.data;
+  const data = model.result.table.data as Array<Record<string, unknown>>;
   return (
     <div className="table-container">
       <div className="table-heading">
-        {columns.map((heading, index) => (
+        {columns.map((heading) => (
           <div key={heading.key} className="heading-cell">
             {heading.label}
           </div>
@@ -22,12 +15,12 @@ const Table: React.FC<{
       {data.map((tableRow, index) => {
         return (
           <div key={index} className="table-row">
-            {columns.map((col, index) => {
+            {columns.map((col) => {
               // need to map each data to display among cells
 
               return (
                 <div key={col.key} className="data-cell">
-                  {tableRow[col.key]}
+                  {String(tableRow[col.key])}
                 </div>
               );
             })}
