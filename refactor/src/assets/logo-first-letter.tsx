@@ -1,4 +1,8 @@
-const LogoFirstLetter: React.FC = ({ width }) => {
+type LogoFirstLetterProps = {
+  width?: number;
+};
+
+const LogoFirstLetter = ({ width }: LogoFirstLetterProps) => {
   const aspectRatio = 81 / 56;
   return (
     <svg

@@ -1,4 +1,4 @@
-const CardOverlappedBackground: React.FC = () => {
+const CardOverlappedBackground = () => {
   return (
     <svg
       width="600"

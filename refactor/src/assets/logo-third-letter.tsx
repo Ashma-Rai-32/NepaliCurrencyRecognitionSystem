@@ -1,4 +1,8 @@
-const LogoThirdLetter: React.FC = ({ width }) => {
+type LogoThirdLetterProps = {
+  width?: number;
+};
+
+const LogoThirdLetter = ({ width }: LogoThirdLetterProps) => {
   const aspectRatio = 81 / 56;
   return (
     <svg
