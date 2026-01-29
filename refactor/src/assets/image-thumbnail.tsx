@@ -1,6 +1,9 @@
-import React from 'react';
+type ImageThumbnailProps = {
+  width?: number | string;
+  height?: number | string;
+};
 
-const ImageThumbnail: React.FC = ({ width, height }) => {
+const ImageThumbnail = ({ width, height }: ImageThumbnailProps) => {
   return (
     <svg
       width={width}
