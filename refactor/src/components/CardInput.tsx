@@ -1,14 +1,23 @@
 import classNames from "classnames";
 import { useRef, useState } from "react";
 
-const CardInput: React.FC<{ children: React.ReactNode }> = ({
+type CardInputProps = {
+  children?: React.ReactNode;
+  className?: string;
+  onClick?: () => void;
+  type?: string;
+  file?: File | null;
+  setFile: (file: File) => void;
+};
+
+const CardInput = ({
   children,
   className,
   onClick,
   type,
   file,
   setFile,
-}) => {
+}: CardInputProps) => {
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
   // Trigger the hidden input when the Card is clicked

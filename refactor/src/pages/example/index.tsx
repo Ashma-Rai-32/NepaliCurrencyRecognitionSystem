@@ -1,6 +1,6 @@
 import styles from "@/src/styles/Example.module.css";
 
-const Example: React.FC = () => {
+const Example = () => {
   return (
     <div className={styles.container}>
       <aside className={styles.sidebar}></aside>

@@ -23,7 +23,7 @@ import TabGraphic from "@/src/components/TabGraphic";
 import { css } from "@emotion/css";
 import { RootState } from "@/src/store/store";
 
-const Model: React.FC = ({}) => {
+const Model = () => {
   return (
     <div className="model-page">
       <div className="section-1">

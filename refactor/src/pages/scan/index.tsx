@@ -25,7 +25,13 @@ import {
   MdOutlineKeyboardArrowRight,
 } from "react-icons/md";
 
-const Scan: React.FC = ({ theme, modelHistory, updateModelHistory }) => {
+type ScanProps = {
+  theme?: string;
+  modelHistory: Record<string, unknown>;
+  updateModelHistory: (data: unknown) => void;
+};
+
+const Scan = ({ theme, modelHistory, updateModelHistory }: ScanProps) => {
   console.log("👾 | modelHistory:", modelHistory);
 
   const fileInputRef = useRef(null);
