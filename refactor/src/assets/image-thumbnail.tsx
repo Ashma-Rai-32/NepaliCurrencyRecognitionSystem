@@ -1,3 +1,5 @@
+import React from 'react';
+
 const ImageThumbnail: React.FC = ({ width, height }) => {
   return (
     <svg
