@@ -256,8 +256,9 @@ const Model: React.FC = ({}) => {
               <PdfViewer fileUrl="/report.pdf" />
             </Card> */}
           </Card>
-          <Button onClick={() => {}}>{model.callToAction.title}</Button>
-          <Button onClick={() => {}}>{model.callToAction.title}</Button>
+          <Button onClick={() => window.open("/report.pdf", "_blank")}>
+            NCR Report
+          </Button>
         </div>{" "}
       </div>
     </div>
