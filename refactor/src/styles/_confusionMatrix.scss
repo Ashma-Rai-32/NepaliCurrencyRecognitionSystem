@@ -1,0 +1,124 @@
+@mixin label-container($direction) {
+    display: flex;
+    flex-direction: $direction;
+
+    >div {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 4rem;
+        width: 5rem;
+        padding: 1rem;
+        box-sizing: border-box
+    }
+
+    .label {
+        @extend .title, .color-background;
+
+        font-size: 1.25rem !important;
+    }
+}
+
+@mixin index-label {
+    width: 5rem;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    padding-right: 1rem;
+    text-transform: uppercase;
+
+    @extend .heading-3, .color-background;
+}
+
+.confusion-matrix-container {
+    display: grid;
+    grid-template-areas: 'tl tl tl'
+        'true matrix matrix'
+        'true predicted pl';
+
+    .tl {
+        grid-area: tl;
+        @include index-label();
+    }
+
+    .pl {
+        grid-area: pl;
+        @include index-label();
+
+        width: 2rem;
+        justify-content: flex-start;
+        align-items: center;
+
+    }
+
+    .true-label-container {
+        grid-area: true;
+
+        @include label-container(column);
+
+        >div {
+            justify-content: flex-end;
+        }
+    }
+
+    .matrix {
+        grid-area: matrix;
+
+        .column-item {
+            display: flex;
+            flex-direction: row;
+            height: 4rem;
+
+
+            .row-item {
+                /* margin: 1rem; */
+                width: 5rem;
+                display: flex;
+                padding: 1rem;
+                height: 100%;
+                box-sizing: border-box;
+                justify-content: center;
+                align-items: center;
+                border: 1px solid $background-light;
+
+
+                @extend .typography, .text-muted;
+
+                &:hover {
+                    background-color: $background-light;
+                }
+            }
+        }
+    }
+
+    .predicted-label-container {
+        grid-area: predicted;
+
+        @include label-container(row)
+    }
+
+
+
+}
+
+
+
+
+// .label-container {
+//     display: flex;
+
+//     >div {
+//         display: flex;
+//         justify-content: center;
+//         width: 5rem;
+//         padding: 1rem;
+//         box-sizing: border-box
+//     }
+
+//     .label {
+//         @extend .title, .color-background;
+
+//         font-size: 1.25rem !important;
+//     }
+// }

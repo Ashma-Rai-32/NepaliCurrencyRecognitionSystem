@@ -1,0 +1,35 @@
+$background: #d5d5d5;
+$background-light: #f5f5f5;
+$text-primary: #0d0d0d;
+$text-muted: #a5a5a5;
+
+
+
+$box-shadow-value: 0px 2px 10px rgba(0, 0, 0, 0.25);
+
+
+// pixel values 
+$column-1: 160px;
+$column-2: 320px;
+$column-3: 480px;
+$column-4: 640px;
+$column-5: 800px;
+
+$border-radius: 2rem;
+
+
+.color-background {
+    color: $background;
+}
+
+.bg-background {
+    background-color: $background;
+}
+
+.bg-text-muted {
+    background-color: $text-muted;
+}
+
+.bg-background-light {
+    background-color: $background-light;
+}

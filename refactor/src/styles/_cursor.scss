@@ -1,0 +1,23 @@
+// Hide the default cursor globally
+* {
+  cursor: none !important;
+}
+
+// Custom cursor styles
+.custom-cursor {
+  position: fixed;
+  pointer-events: none;
+  z-index: 99999;
+  transform: translate(-2px, -2px);
+  opacity: 0;
+  transition: opacity 0.15s ease;
+
+  &.visible {
+    opacity: 1;
+  }
+
+  svg {
+    display: block;
+    filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.15));
+  }
+}

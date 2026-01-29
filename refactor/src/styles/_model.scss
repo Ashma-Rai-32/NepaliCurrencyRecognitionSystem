@@ -1,0 +1,34 @@
+.flowchart-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+
+    .flowchart-item {
+        display: flex;
+        border-radius: 1rem;
+        width: $column-1;
+        height: $column-1;
+        color: white;
+        justify-content: center;
+        align-items: center;
+
+        &.shade-1 {
+            background-color: $background-light;
+            @extend .text-muted;
+        }
+
+        &.shade-2 {
+
+            background-color: $background;
+        }
+
+        &.shade-3 {
+            background-color: $text-muted;
+
+        }
+
+        &.shade-4 {
+            background-color: $text-primary;
+        }
+    }
+}
