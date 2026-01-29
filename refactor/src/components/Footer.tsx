@@ -6,7 +6,7 @@ const Footer: React.FC<{
 }> = ({ listArray, className }) => {
   return (
     <div className="footer">
-      {`Our system is here for your convenience. If it crashes, please don’t bother us. <(￣︶￣)> hehhh!~`}
+      {`I made this for self entertainment purposes. If it crashes, please don’t come at me. <(￣︶￣)> hehhh!~`}
     </div>
   );
 };
