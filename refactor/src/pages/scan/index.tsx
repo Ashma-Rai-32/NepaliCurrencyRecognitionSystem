@@ -23,6 +23,8 @@ import {
   MdOutlineKeyboardArrowRight,
 } from "react-icons/md";
 
+const API_URL = process.env.NEXT_PUBLIC_API_URL || "https://nepalicurrencyrecognitionsystem.onrender.com";
+
 type ModelHistoryEntry = {
   fileImageUrl: string;
   fileMetadata: { name: string; size: number; lastModified: number };
@@ -69,7 +71,7 @@ const Scan = ({ modelHistory, updateModelHistory }: ScanProps) => {
       if (!file) return;
       const formData = new FormData();
       formData.append("imagefile", file);
-      const response = await axios.post("http://localhost:5000/", formData);
+      const response = await axios.post(`${API_URL}/`, formData);
 
       console.log("👾 | response:", response);
 
