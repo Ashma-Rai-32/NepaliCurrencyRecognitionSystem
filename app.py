@@ -16,9 +16,6 @@ import io
 import base64
 from werkzeug.utils import secure_filename
 
-from playsound import playsound
-
-
 app = Flask(__name__)
 CORS(app)
 model = tf.keras.models.load_model("final.h5")
@@ -96,4 +93,5 @@ def predictfn():
 
 
 if __name__ == "__main__":
-    app.run(port=5500, debug=True)
+    port = int(os.environ.get("PORT", 5500))
+    app.run(host="0.0.0.0", port=port, debug=False)
